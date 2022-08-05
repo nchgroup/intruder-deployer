@@ -62,6 +62,8 @@ systemctl disable \
 # Install essential tools
 DEBIAN_FRONTEND=noninteractive apt install -y \
 	nmap \
+	arp-scan \
+	netdiscover \
 	autossh \
 	nbtscan \
 	prips \
@@ -74,6 +76,7 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
 	wipe \
 	libpcap-dev \
 	sslh \
+	ettercap-text-only \
 	proxychains4
 
 pip3 install scapy
@@ -106,6 +109,14 @@ source /etc/profile.d/golang_path.sh
 # Install Golang tools
 go install github.com/projectdiscovery/simplehttpserver/cmd/simplehttpserver@latest
 go install github.com/jpillora/chisel@latest
+
+# Install bettercap
+DEBIAN_FRONTEND=noninteractive apt install -y \
+	build-essential \
+	libpcap-dev \
+	libusb-1.0-0-dev \
+	libnetfilter-queue-dev
+go install github.com/bettercap/bettercap@latest
 
 # ssh key gen
 echo -e "\n\n"

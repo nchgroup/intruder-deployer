@@ -26,6 +26,9 @@ bash config.sh
 * python3-dev
 * tcpdump
 * macchanger
+* ettercap
+* arp-scan
+* netdiscover
 * traceroute
 * tshark
 * wipe
@@ -38,6 +41,7 @@ bash config.sh
 * Golang
 * simplehttpserver
 * chisel
+* bettercap
 
 
 # Tested on root user only
