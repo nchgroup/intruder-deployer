@@ -75,6 +75,7 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
 	tshark \
 	wipe \
 	libpcap-dev \
+	hping3 \
 	sslh \
 	ettercap-text-only \
 	proxychains4
