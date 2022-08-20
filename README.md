@@ -1,53 +1,117 @@
 # intruder-deployer
 Adversaries may introduce computer accessories, networking hardware, or other computing devices into a system or network that can be used as a vector to gain access - Mitre
 
-## Getting started
+## Getting started (Installation)
+
+**How to run the project**
+```bash
+# Clone this project
+git clone https://github.com/nchgroup/intruder-deployer.git
+cd intruder-deployer
+# Edit config.sh
+nano config.sh
+# Upload the files to your server
+scp -r -i yourprivkey.pem *.sh uservps@vpserverip:~/intruder-deployer
+```
+
+### SSH tunnel preference
+
+**Hardware Backdoor Instalation**
+
+```bash
+cd intruder-deployer
+bash intruder_installer.sh
+# add pub key in your config.sh
+bash intruder_config_ssh_443.sh
+# done
+```
+
+**VPS Installation**
+
+```bash
+cd intruder-deployer
+bash server_create_user_ssh.sh
+# done
+```
+
+### HTTPS tunnel (Cloudflare) preference
+
+**Hardware Backdoor Instalation**
+
+```bash
+cd intruder-deployer
+bash intruder_installer.sh
+# your pub key isn't necessary
+bash intruder_config_proxy_https.sh
+# done
+```
+
+**VPS Installation**
+
+```bash
+# you need configure in Cloudflare your domain
+cd intruder-deployer
+bash server_https_proxy.sh
+# done
+```
+
+**Create subdomain in Cloudflare in your personal PC**
 
 ```bash
 git clone https://github.com/nchgroup/intruder-deployer.git
 cd intruder-deployer
-bash installer.sh
-# add pub key in your vps
-
-# edit config.sh with your vps configs
-bash config.sh
-
+# this script create a subdomain in Cloudflare
+bash cloudflare-subdom-config.sh
 # done
 ```
 
 ## Tools installed
 
-* firewalld
-* nmap
-* autossh
-* nbtscan
-* prips
-* python3-pip
-* python3-dev
-* tcpdump
-* macchanger
-* ettercap
 * arp-scan
+* autossh
+* bettercap
+* chisel
+* crackmapexec
+* dnscrypt-proxy
+* ettercap
+* firewalld
+* fscrypt
+* golang
+* hping3
+* libpcap-dev
+* macchanger
+* nbtscan
 * netdiscover
+* nmap
+* prips
+* proxychains4
+* python3-dev
+* python3-pip
+* responder
+* scapy
+* simplehttpserver
+* sslh
+* tcpdump
 * traceroute
 * tshark
 * wipe
-* libpcap-dev
-* sslh
-* proxychains4
-* scapy
-* Responder
-* crackmapexec
-* Golang
-* simplehttpserver
-* chisel
-* bettercap
 
 
-# Tested on root user only
+# Network topology of the backdoor (Armbian)
 
+## VPS with Cloudflare
+![lel](network_topology_intruder.jpeg)
+
+# OS Compatibility
+* Ubuntu 22.04 client/server
+
+## Tested on root user only client
 * Nanopi Neo 512MB: https://redirect.armbian.com/nanopineo/Jammy_current
 * Orange pi Zero2 1GB (Ubuntu 22.04): http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-Zero-2.html
+
+## Tested on VPS providers
+* Vultr: https://www.vultr.com/
+* Amazon AWS: https://aws.amazon.com/
 
 # Hardware Info
 

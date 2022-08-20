@@ -1,8 +1,5 @@
 #!/bin/bash
 
-intruder_port=443
-intruder_listen="0.0.0.0"
-
 # Check root
 if [[ "$(id -u)" -ne 0 ]]; then
     echo "[-] This script must be run as root user"
@@ -10,15 +7,15 @@ if [[ "$(id -u)" -ne 0 ]]; then
 fi
 
 # VARS
-DIRNAME="arsenal"
-WORKDIR="$HOME/$DIRNAME"
+source config.sh
+WORKDIR="$HOME/$intruder_dirname"
 
 # Create SSH config
 cat <<EOF >> sshd_config
 Include /etc/ssh/sshd_config.d/*.conf
-Port $intruder_port
+Port $intruder_ssh_port
 # Port 22
-# Listen $intruder_listen
+ListenAdress $intruder_ssh_listen
 PermitRootLogin yes
 MaxAuthTries 6
 PubkeyAuthentication no
@@ -119,6 +116,22 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
 	libnetfilter-queue-dev
 go install github.com/bettercap/bettercap@latest
 
+# install DoH
+DEBIAN_FRONTEND=noninteractive apt install dnscrypt-proxy
+cat <<EOF > /etc/NetworkManager/conf.d/00-dns.conf
+[main]
+dns=none
+EOF
+systemctl restart NetworkManager.service
+cat <<EOF > /etc/resolv.conf
+nameserver ::ffff:7f00:201
+nameserver 127.0.2.1
+options edns0 single-request-reopen
+EOF
+systemctl start dnscrypt-proxy.service
+systemctl enable dnscrypt-proxy.service
+systemctl restart NetworkManager.service
+
 # ssh key gen
 echo -e "\n\n"
 echo "[*] generating ssh key"
@@ -131,3 +144,15 @@ echo -e "\n\n"
 
 echo -e "\n\n"
 echo "[!] Don't forget to save your user/password for local ssh and your keys for tunnel"
+
+# Install fscrypt
+DEBIAN_FRONTEND=noninteractive apt-get -y install fscrypt
+fscrypt setup
+tune2fs -O encrypt "/dev/mmcblk0p1"
+mkdir $PWD/private
+fscrypt encrypt $PWD/private --source=custom_passphrase --name=pi
+# umount
+echo
+echo "> umounting: $ fscrypt lock $PWD/private"
+# mount
+echo "> mounting: $ fscrypt unlock $PWD/private"
