@@ -8,6 +8,7 @@ Adversaries may introduce computer accessories, networking hardware, or other co
 # Clone this project
 git clone https://github.com/nchgroup/intruder-deployer.git
 cd intruder-deployer
+cp config.sh.example config.sh
 # Edit config.sh
 nano config.sh
 # Upload the files to your server
