@@ -1,6 +1,6 @@
 #!/bin/bash
 
-intruder_port=443
+intruder_port=22
 intruder_listen="0.0.0.0"
 
 # Check root
@@ -17,8 +17,7 @@ WORKDIR="$HOME/$DIRNAME"
 cat <<EOF >> sshd_config
 Include /etc/ssh/sshd_config.d/*.conf
 Port $intruder_port
-# Port 22
-# Listen $intruder_listen
+ListenAddress $intruder_listen
 PermitRootLogin yes
 MaxAuthTries 6
 PubkeyAuthentication no
