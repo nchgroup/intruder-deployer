@@ -36,6 +36,7 @@ echo ssh restart
 systemctl daemon-reload
 systemctl enable autossh-tunnel
 systemctl restart ssh
+systemctl restart autossh-tunnel
 echo "[+] happy hacking"
 echo -e "\n"
 echo "ssh root@localhost -p2222"
