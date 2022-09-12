@@ -76,6 +76,8 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
 	libpcap-dev \
 	hping3 \
 	sslh \
+	socat \
+	netcat \
 	ettercap-text-only \
 	proxychains4
 
